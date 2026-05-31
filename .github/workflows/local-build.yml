@@ -1,9 +1,7 @@
 name: Local Build (No License Required)
 
 on:
-  workflow_dispatch:  # 手动触发，不浪费 Actions 额度
-  push:
-    branches: [main]
+  workflow_dispatch:  # 仅手动触发，省额度
 
 jobs:
   build:
