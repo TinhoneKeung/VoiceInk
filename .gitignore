@@ -53,6 +53,7 @@ Carthage/Build/
 
 # Accio dependency management
 Dependencies/
+VoiceInk-Dependencies/
 .accio/
 
 # fastlane

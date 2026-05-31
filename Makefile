@@ -1,8 +1,8 @@
 # Define a directory for dependencies in the user's home folder
-DEPS_DIR := $(HOME)/VoiceInk-Dependencies
+DEPS_DIR ?= $(CURDIR)/VoiceInk-Dependencies
 WHISPER_CPP_DIR := $(DEPS_DIR)/whisper.cpp
 FRAMEWORK_PATH := $(WHISPER_CPP_DIR)/build-apple/whisper.xcframework
-LOCAL_DERIVED_DATA := $(CURDIR)/.local-build
+LOCAL_DERIVED_DATA ?= $(CURDIR)/.local-build
 
 .PHONY: all clean whisper setup build local check healthcheck help dev run
 

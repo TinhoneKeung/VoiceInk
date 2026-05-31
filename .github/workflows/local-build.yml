@@ -1,0 +1,35 @@
+name: Local Build (No License Required)
+
+on:
+  workflow_dispatch:  # 手动触发，不浪费 Actions 额度
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install cmake
+        run: brew install cmake
+
+      - name: Build whisper.xcframework
+        run: |
+          make -j$(sysctl -n hw.logicalcpu) whisper DEPS_DIR="$PWD/VoiceInk-Dependencies"
+
+      - name: Build VoiceInk (LOCAL_BUILD)
+        run: |
+          make local DEPS_DIR="$PWD/VoiceInk-Dependencies"
+
+      - name: Package as DMG
+        run: |
+          APP_PATH=".local-build/Build/Products/Debug/VoiceInk.app"
+          hdiutil create -volname VoiceInk -srcfolder "$APP_PATH" -ov VoiceInk-Local.dmg
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VoiceInk-Local
+          path: VoiceInk-Local.dmg
