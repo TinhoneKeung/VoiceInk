@@ -13,6 +13,14 @@ jobs:
       - name: Install cmake
         run: brew install cmake
 
+      - name: Switch to latest Xcode
+        run: |
+          LATEST_XCODE=$(ls -d /Applications/Xcode*.app | tail -1)
+          echo "Switching to $LATEST_XCODE"
+          sudo xcode-select --switch "$LATEST_XCODE/Contents/Developer"
+          xcodebuild -version
+          swift --version
+
       - name: Build whisper.xcframework
         run: |
           make -j$(sysctl -n hw.logicalcpu) whisper DEPS_DIR="$PWD/VoiceInk-Dependencies"
